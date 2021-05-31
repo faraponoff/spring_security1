@@ -1,4 +1,4 @@
-package spring.com.config.security.handler;
+package spring.com.security.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,4 +1,4 @@
-package spring.com.controlers;
+package spring.com.controler;
 
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public String showUserById(@PathVariable("id") long id, Model model) {
+    public String showUserById(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "showUser";
 
@@ -66,7 +66,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(Model model, @PathVariable("id") long id) {
+    public String editForm(Model model, @RequestParam("id") long id) {
 
         model.addAttribute("user", userService.getUserById(id));
 
@@ -74,7 +74,7 @@ public class AdminController {
     }
 
     @PostMapping("/{id}/update")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id,
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam("id") long id,
                              @RequestParam(value = "selectRoles[]") String[] arr) {
         Set<Role> setOfRoles = new HashSet<>();
 
@@ -88,7 +88,7 @@ public class AdminController {
     }
 
     @PostMapping("/{id}/delete")
-    public String deleteUser(@PathVariable("id") long id) {
+    public String deleteUser(@RequestParam("id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
