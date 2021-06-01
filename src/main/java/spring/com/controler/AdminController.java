@@ -39,7 +39,7 @@ public class AdminController {
         return "users";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/")
     public String showUserById(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "showUser";
@@ -53,7 +53,7 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user, @RequestParam(value = "selectRoles[]") String[] arr) {
+    public String addUser(@ModelAttribute User user, @RequestParam(value = "id") String[] arr) {
         Set<Role> setOfRoles = new HashSet<>();
 
         for (String s : arr) {
@@ -65,15 +65,15 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit")
     public String editForm(Model model, @RequestParam("id") long id) {
 
-        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("id", userService.getUserById(id));
 
         return "editUser";
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") User user, @RequestParam("id") long id,
                              @RequestParam(value = "selectRoles[]") String[] arr) {
         Set<Role> setOfRoles = new HashSet<>();
@@ -83,11 +83,11 @@ public class AdminController {
         }
 
         user.setRoles(setOfRoles);
-        userService.updateUser(user);
+        userService.updateUser(id);
         return "redirect:/admin";
     }
 
-    @PostMapping("/{id}/delete")
+    @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
