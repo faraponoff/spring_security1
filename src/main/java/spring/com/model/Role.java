@@ -1,22 +1,18 @@
 package spring.com.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
+import javax.persistence.*;
 
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "Role", nullable = false)
+    @Column(name = "role", nullable = false)
     private String roleName;
 
 

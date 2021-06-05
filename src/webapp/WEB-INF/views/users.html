@@ -13,10 +13,10 @@
     </tr>
     <tr th:each="user : ${users}">
         <th>
-            <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getName()}"></a>
+            <a th:href="@{/admin/(id=${user.getId()})}" th:text="${user.getName()}"></a>
         </th>
         <th>
-            <form th:method="GET" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
+            <form th:method="POST" th:action="@{/admin/edit(id=${user.getId()})}">
                 <input type="submit" value="Edit"/>
             </form>
         </th>

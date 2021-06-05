@@ -1,7 +1,5 @@
 package spring.com.config;
 
-import com.sun.xml.fastinfoset.sax.Properties;
-import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,9 +14,9 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.activation.DataSource;
 import javax.sql.DataSource;
 import java.util.Properties;
+
 
 @Configuration
 @EnableTransactionManagement

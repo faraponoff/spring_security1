@@ -47,17 +47,17 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUserForm(Model model) {
+    public String newUserForm(Model model, @ModelAttribute User user, @ModelAttribute String[] selectRoles) {
         model.addAttribute("user", new User());
         return "newUser";
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user, @RequestParam(value = "id") String[] arr) {
+    public String addUser(@ModelAttribute User user, @ModelAttribute String[] selectRoles) {
         Set<Role> setOfRoles = new HashSet<>();
 
-        for (String s : arr) {
-            setOfRoles.add((Role) Object);
+        for (String s : selectRoles) {
+//            setOfRoles.add((Role) Object);
         }
 
         user.setRoles(setOfRoles);
@@ -65,10 +65,10 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit")
+    @PostMapping("/edit")
     public String editForm(Model model, @RequestParam("id") long id) {
 
-        model.addAttribute("id", userService.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
 
         return "editUser";
     }
@@ -79,11 +79,11 @@ public class AdminController {
         Set<Role> setOfRoles = new HashSet<>();
 
         for (String s : arr) {
-            setOfRoles.add((Role) Object);
+//            setOfRoles.add((Role) Object);
         }
 
         user.setRoles(setOfRoles);
-        userService.updateUser(id);
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 
