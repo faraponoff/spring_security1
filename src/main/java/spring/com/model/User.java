@@ -1,45 +1,48 @@
 package spring.com.model;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 
 
-@NamedEntityGraph(name = "user.roles", attributeNodes = @NamedAttributeNode("roles"))
 @Entity
+
 @Table(name = "users")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "Name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "Surname", nullable = false)
+    @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Column(name = "Profession", nullable = false)
+    @Column(name = "profession", nullable = false)
     private String profession;
 
-    @Column(name = "Email", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "Password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn (name = "ID")
-    private Set<Role> roles = new HashSet<>();
-
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+    )
+    private Set<Role> roles;
 
     public User() {
-
     }
 
     public User(Long id, String name, String surname, String profession, String email, String password) {
@@ -48,14 +51,14 @@ public class User implements UserDetails {
         this.surname = surname;
         this.profession = profession;
         this.email = email;
+        this.password = password;
     }
 
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -104,14 +107,10 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String toString() {
-        return getName() + getSurname() + "is a" + getProfession();
-    }
-
-    @Override
-    public Set<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
+
     @Override
     public String getPassword() {
         return password;

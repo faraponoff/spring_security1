@@ -1,22 +1,17 @@
 package spring.com.controler;
-
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import spring.com.model.Role;
 import spring.com.model.User;
 import spring.com.service.RoleService;
 import spring.com.service.UserService;
 
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -24,7 +19,7 @@ public class AdminController {
 
     private UserService userService;
     private RoleService roleService;
-    private MysqlxDatatypes.Object Object;
+
 
 
     @Autowired
@@ -53,37 +48,23 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user, @RequestParam(value = "id") String[] arr) {
-        Set<Role> setOfRoles = new HashSet<>();
-
-        for (String s : arr) {
-            setOfRoles.add((Role) Object);
-        }
-
-        user.setRoles(setOfRoles);
-        userService.saveUser(user);
+    public String addUser(@ModelAttribute User user, @RequestParam(value = "selectRoles[]") String[] roleNames) {
+        userService.saveUser(user, roleNames);
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit")
+    @PostMapping("/edit")
     public String editForm(Model model, @RequestParam("id") long id) {
 
-        model.addAttribute("id", userService.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
 
         return "editUser";
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("user") User user, @RequestParam("id") long id,
-                             @RequestParam(value = "selectRoles[]") String[] arr) {
-        Set<Role> setOfRoles = new HashSet<>();
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam(value = "selectRoles[]") String[] roleNames) {
 
-        for (String s : arr) {
-            setOfRoles.add((Role) Object);
-        }
-
-        user.setRoles(setOfRoles);
-        userService.updateUser(id);
+        userService.updateUser(user, roleNames);
         return "redirect:/admin";
     }
 
@@ -92,6 +73,5 @@ public class AdminController {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
-
 
 }

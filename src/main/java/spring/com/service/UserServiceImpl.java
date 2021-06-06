@@ -38,19 +38,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User saveUser(User user) {
+    public User saveUser(User user, String[] roleNames) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userDAO.saveUser(user);
+        return userDAO.saveUser(user, roleNames);
     }
 
     @Override
-    public User updateUser(User user) {
-        return userDAO.updateUser(user);
+    public User updateUser(User user, String[] roleNames) {
+        return userDAO.updateUser(user, roleNames);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return userDAO.getUserByUsername(username);
+        return userDAO.getUserByEmail(username);
     }
 
 

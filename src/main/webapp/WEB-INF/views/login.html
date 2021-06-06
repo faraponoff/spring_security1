@@ -8,10 +8,12 @@
 <body>
 
 <div>
+<!--    <form method="post" action="${pageContext.request.contextPath}/login">-->
+<!--    <form method="post" action="@{/login}">-->
     <form method="post" action="/login">
-        <label for name="username">E-mail</label>
+        <label for name="email">E-mail</label>
         <br>
-        <input name="username"/>
+        <input name="email"/>
         <br>
 
         <label for name="password">Password</label>

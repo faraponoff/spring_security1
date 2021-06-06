@@ -1,59 +1,56 @@
 package spring.com.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
+import javax.persistence.*;
 
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
-    @Column(name = "ID")
-    private Integer id;
-    @Column(name = "Role", nullable = false)
-    private String roleName;
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "role", nullable = false)
+    private String role;
 
 
-
-    public Role(Integer id, String roleName, User user) {
+    public Role(Long id, String role) {
         this.id = id;
-        this.roleName = roleName;
+        this.role = role;
     }
 
+    public Role(String role) {
+        this.role = role;
+    }
 
     public Role() {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoleName(String role) {
-        this.roleName = role;
+    public void setRole(String role) {
+        this.role = role;
     }
+
 
     @Override
     public String getAuthority() {
-        return roleName;
+        return role;
     }
 
-    @Override
-    public String toString() {
-        return roleName;
-    }
+
 }

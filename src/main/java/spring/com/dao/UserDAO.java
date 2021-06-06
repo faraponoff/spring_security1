@@ -12,10 +12,10 @@ public interface UserDAO {
 
     void deleteUser(Long id);
 
-    User saveUser(User user);
+    User saveUser(User user, String[] roleNames);
 
-    User updateUser(User user);
+    User updateUser(User user, String[] roleNames);
 
-    User getUserByUsername(String username);
+    User getUserByEmail(String username);
 
 }
